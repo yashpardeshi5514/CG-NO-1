@@ -1,26 +1,51 @@
-#include<stdio.h>
-#include<graphics.h>
-int main()
-{
-int x1=200,y1=100,x2=100,y2=200,gd=DETECT,gm,dx,dy,steps,i,x,y;
-initgraph(&gd,&gm,NULL);
-dx=(x2-x1);
-dy=(y2-y2);
-if(dx>dy)
-steps=dx;
-else
-steps=dy;
-dx=dx/steps;
-dy=dy/steps;
-x=x1,x=y1,i=1;
-while(i<=steps)
-{
-putpixel(x,y,RED);
-x=x+dx;
-y=y+dy;
-i=i+1;
-delay(100);
-}
-getch();
-return 0;
-}
+Write C++ program to draw a concave polygon and fill it with desired color using scan fill algorithm. Apply the concept of inheritance.
+
+
+
+#include<graphics.h>  
+#include<iostream>  
+ 
+using namespace std;  
+ 
+void FloodFill(int x, int y, int oldc, int newc)  
+{  
+ int current;  
+ current=getpixel(x,y);  
+ if(current==oldc)  
+ {  
+  putpixel(x,y,newc);  
+  delay(5);  
+  FloodFill(x+1,y,oldc,newc);  
+  FloodFill(x-1,y,oldc,newc);  
+  FloodFill(x,y+1,oldc,newc);  
+  FloodFill(x,y-1,oldc,newc);  
+ }  
+}  
+ 
+int main()  
+{  
+ int x,y,oldc=0,x1,y1,x2,y2;  
+    
+ int gDriver=DETECT,gmode;  
+ initgraph(&gDriver,&gmode, NULL);  
+ 
+        cout<<"Enter the coordinates of rectangle:";  
+        cin>>x1>>y1>>x2>>y2;  
+                    setcolor(1);  
+ line(x1,y1,x2,y1);  
+        setcolor(2);   
+        line(x2,y1,x2,y2);  
+        setcolor(3);  
+        line(x2,y2,x1,y2);  
+        setcolor(5);  
+        line(x1,y2,x1,y1);  
+ 
+ x=(x1+x2)/2;  
+ y=(y1+y2)/2;  
+ 
+ FloodFill(x,y,oldc,4);  
+ 
+ delay(500000);  
+ closegraph();  
+        return 0;  
+} 
